@@ -42,11 +42,9 @@ public class PlayerController : MonoBehaviour
     public float jumpForce = 16f;
     public int amountOfJumps = 1;
     public float variableJumpHeightMultiplier = 0.5f;
-    public float movementForceInAir;
     public float airDragMultiplier = 0.95f;
     public float wallCheckDistance;
     public float wallSlideSpeed;
-    public float wallHopForce;
     public float wallJumpForce;
     public float jumpTimeSet = 0.15f;
     public float wallJumpTimeSet = 0.5f;   
@@ -56,15 +54,13 @@ public class PlayerController : MonoBehaviour
     [Header("Outros")]
     public LayerMask whatisGround;
     public bool isFacingRight = true;
-    public Vector2 wallHopDirection;
     public Vector2 wallJumpDirection;
     public float turnTimeSet = 0.1f;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        wallHopDirection.Normalize();
-        wallHopDirection.Normalize();
+        wallJumpDirection.Normalize();
     }
 
     // Update is called once per frame
@@ -276,7 +272,7 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-
+    
     private void Flip()
     {
         if (!isWallSliding && canFlip)

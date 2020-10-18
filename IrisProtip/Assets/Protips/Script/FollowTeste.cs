@@ -8,14 +8,30 @@ public class FollowTeste : MonoBehaviour
     public float speed;
     public float StoppingDistance;
     public Transform target;
+    public Transform groundCheck;
+    private bool isGrounded;
+    public float groundRadius;
+
+    public LayerMask whatisGround;
 
     // Update is called once per frame
     void Update()
     {
-        //float distance = transform.position.x - target.position.x;
-        if(Vector2.Distance(transform.position, target.position) < StoppingDistance && Vector2.Distance(transform.position, target.position) > 1.5f)
+
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, whatisGround);
+
+        if (isGrounded)
         {
-            transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+            if (Vector2.Distance(transform.position, target.position) < StoppingDistance && Vector2.Distance(transform.position, target.position) > 1.5f)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+            }
         }
+       
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(groundCheck.position, groundRadius);
     }
 }
