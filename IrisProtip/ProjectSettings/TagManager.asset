@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Follow
   layers:
   - Default
   - TransparentFX
@@ -38,6 +39,15 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: BG
+    uniqueID: 2991719495
+    locked: 0
+  - name: Ariel
+    uniqueID: 358298253
+    locked: 0
+  - name: Acsa
+    uniqueID: 2420621483
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

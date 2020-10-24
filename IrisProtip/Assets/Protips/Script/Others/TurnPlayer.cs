@@ -13,23 +13,32 @@ public class TurnPlayer : MonoBehaviour
     public GameObject Ariel;
     [SerializeField]
     private bool isAcsaFirst;
+    private GameObject isTurnThis;
 
     private void Start()
     {
 		textBox.text = timeStart.ToString();
         culdowBtn = culdowBtnSet;
+        if (isAcsaFirst)
+        {
+            isTurnThis = Acsa;
+        }
+        else
+        {
+            isTurnThis = Ariel;
+        }
     }
 
     private void Update()
     {
         SetTime();
-        if(Input.GetKeyDown(KeyCode.Z) && culdowBtn >= culdowBtnSet)
+        if(Input.GetKeyDown(KeyCode.Z))
         {
             TurnOut();
             culdowBtn = -1;
         }
 
-        if(Input.GetKeyDown(KeyCode.X) && timeStart > 0)
+        if(Input.GetKeyDown(KeyCode.X) && timeStart > 0 && culdowBtn >= culdowBtnSet)
         {
             SwitchPos();
         }
@@ -57,13 +66,21 @@ public class TurnPlayer : MonoBehaviour
         {
             Acsa.GetComponent<PlayerController>().enabled = false;
             Ariel.GetComponent<PlayerController>().enabled = true;
+            FindObjectOfType<V1>().GetPosToFollow(Ariel.gameObject);
+            isTurnThis = Ariel;
             isAcsaFirst = false;
+            //Trocando os mundos e crianto um fantasma da Acsa
+            FindObjectOfType<WorldControll>().SetTime();
         }
         else
         {
             Ariel.GetComponent<PlayerController>().enabled = false;
             Acsa.GetComponent<PlayerController>().enabled = true;
+            FindObjectOfType<V1>().GetPosToFollow(Acsa.gameObject);
+            isTurnThis = Acsa;
             isAcsaFirst = true;
+            //Trocando os mundos e criando um fantasma do Ariel
+            FindObjectOfType<WorldControll>().SetTime();
         }
 
         timeStart = 10f;
@@ -77,6 +94,11 @@ public class TurnPlayer : MonoBehaviour
 
         Ariel.transform.position = pos1;
         Acsa.transform.position = pos2;
+    }
+
+    public GameObject GetTurnToPlayer()
+    {
+        return isTurnThis;
     }
 }
 
